@@ -1,24 +1,24 @@
-//! A raycasting backend for `bevy_mod_picking` that uses `xpbd` for raycasting.
+//! A raycasting backend for `bevy_mod_picking` that uses `avian` for raycasting.
 //!
 //! # Usage
 //!
-//! Pointers will automatically shoot rays into the xpbd scene and pick entities.
+//! Pointers will automatically shoot rays into the avian scene and pick entities.
 //!
 //! To ignore an entity, you can add [`Pickable::IGNORE`] to it, and it will be ignored during
 //! raycasting.
 //!
-//! For fine-grained control, see the [`XpbdBackendSettings::require_markers`] setting.
+//! For fine-grained control, see the [`AvianBackendSettings::require_markers`] setting.
 //!
 //! ## Limitations
 //!
 //! Because raycasting is expensive, only the closest intersection will be reported. This means that
-//! unlike some UI, you cannot hover multiple xpbd objects with a single pointer by configuring the
+//! unlike some UI, you cannot hover multiple avian objects with a single pointer by configuring the
 //! [`Pickable`] component to not block lower elements but still emit events. As mentioned above,
 //! all that is supported is completely ignoring an entity with [`Pickable::IGNORE`].
 //!
 //! This is probably not a meaningful limitation, as the feature is usually only used in UI where
 //! you might want a pointer to be able to pick multiple elements that are on top of each other. If
-//! are trying to build a UI out of xpbd entities, beware, I suppose.
+//! are trying to build a UI out of avian entities, beware, I suppose.
 
 #![allow(clippy::type_complexity)]
 #![allow(clippy::too_many_arguments)]
@@ -30,32 +30,32 @@ use bevy_reflect::{std_traits::ReflectDefault, Reflect};
 use bevy_render::{prelude::*, view::RenderLayers};
 
 use bevy_picking_core::backend::prelude::*;
-use bevy_xpbd_3d::prelude::*;
+use avian3d::prelude::*;
 
 // Re-export for users who want this
-pub use bevy_xpbd_3d;
+pub use avian3d;
 
 /// Commonly used imports.
 pub mod prelude {
-    pub use crate::{XpbdBackend, XpbdBackendSettings, XpbdPickable};
+    pub use crate::{AvianBackend, AvianBackendSettings, XpbdPickable};
 }
 
-/// Adds the `xpbd_3d` raycasting picking backend to your app.
+/// Adds the `avian3d` raycasting picking backend to your app.
 #[derive(Clone)]
-pub struct XpbdBackend;
-impl Plugin for XpbdBackend {
+pub struct AvianBackend;
+impl Plugin for AvianBackend {
     fn build(&self, app: &mut App) {
-        app.init_resource::<XpbdBackendSettings>()
+        app.init_resource::<AvianBackendSettings>()
             .add_systems(PreUpdate, update_hits.in_set(PickSet::Backend))
-            .register_type::<XpbdBackendSettings>()
+            .register_type::<AvianBackendSettings>()
             .register_type::<XpbdPickable>();
     }
 }
 
-/// Runtime settings for the [`XpbdBackend`].
+/// Runtime settings for the [`AvianBackend`].
 #[derive(Resource, Default, Reflect)]
 #[reflect(Resource, Default)]
-pub struct XpbdBackendSettings {
+pub struct AvianBackendSettings {
     /// When set to `true` raycasting will only happen between cameras and entities marked with
     /// [`XpbdPickable`]. Off by default. This setting is provided to give you fine-grained
     /// control over which cameras and entities should be used by the xpbd backend at runtime.
@@ -76,7 +76,7 @@ pub fn update_hits(
     pickables: Query<&Pickable>,
     marked_targets: Query<&XpbdPickable>,
     layers: Query<&RenderLayers>,
-    backend_settings: Res<XpbdBackendSettings>,
+    backend_settings: Res<AvianBackendSettings>,
     spatial_query: Option<Res<SpatialQueryPipeline>>,
     mut output_events: EventWriter<PointerHits>,
 ) {

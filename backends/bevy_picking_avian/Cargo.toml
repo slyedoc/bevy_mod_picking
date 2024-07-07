@@ -1,12 +1,12 @@
 [package]
-name = "bevy_picking_xpbd"
+name = "bevy_picking_avian"
 version = "0.20.0"
 edition = "2021"
 authors = ["Aevyrie <aevyrie@gmail.com>, Affinator"]
 license = "MIT OR Apache-2.0"
 description = "A modular picking plugin for Bevy."
 repository = "https://github.com/aevyrie/bevy_mod_picking/"
-keywords = ["gamedev", "picking", "bevy", "eventlistener", "xpbd"]
+keywords = ["gamedev", "picking", "bevy", "eventlistener", "avian"]
 categories = ["game-engines"]
 resolver = "2"
 
@@ -22,6 +22,6 @@ bevy_transform = { version = "0.14.0", default-features = false }
 bevy_utils = { version = "0.14.0", default-features = false }
 bevy_window = { version = "0.14.0", default-features = false }
 
-bevy_xpbd_3d = "0.5"
+avian3d = "0.1"
 # Local
 bevy_picking_core = { path = "../../crates/bevy_picking_core", version = "0.20.0" }
