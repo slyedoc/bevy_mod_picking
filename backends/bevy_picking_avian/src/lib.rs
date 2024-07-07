@@ -37,7 +37,7 @@ pub use avian3d;
 
 /// Commonly used imports.
 pub mod prelude {
-    pub use crate::{AvianBackend, AvianBackendSettings, XpbdPickable};
+    pub use crate::{AvianBackend, AvianBackendSettings, AvianPickable};
 }
 
 /// Adds the `avian3d` raycasting picking backend to your app.
@@ -48,7 +48,7 @@ impl Plugin for AvianBackend {
         app.init_resource::<AvianBackendSettings>()
             .add_systems(PreUpdate, update_hits.in_set(PickSet::Backend))
             .register_type::<AvianBackendSettings>()
-            .register_type::<XpbdPickable>();
+            .register_type::<AvianPickable>();
     }
 }
 
@@ -57,24 +57,24 @@ impl Plugin for AvianBackend {
 #[reflect(Resource, Default)]
 pub struct AvianBackendSettings {
     /// When set to `true` raycasting will only happen between cameras and entities marked with
-    /// [`XpbdPickable`]. Off by default. This setting is provided to give you fine-grained
-    /// control over which cameras and entities should be used by the xpbd backend at runtime.
+    /// [`AvianPickable`]. Off by default. This setting is provided to give you fine-grained
+    /// control over which cameras and entities should be used by the avian backend at runtime.
     pub require_markers: bool,
 }
 
-/// Optional. Marks cameras and target entities that should be used in the xpbd picking backend.
-/// Only needed if [`XpbdBackendSettings::require_markers`] is set to true.
+/// Optional. Marks cameras and target entities that should be used in the avian picking backend.
+/// Only needed if [`AvianBackendSettings::require_markers`] is set to true.
 #[derive(Debug, Clone, Default, Component, Reflect)]
 #[reflect(Component, Default)]
-pub struct XpbdPickable;
+pub struct AvianPickable;
 
-/// Raycasts into the scene using [`XpbdBackendSettings`] and [`PointerLocation`]s, then outputs
+/// Raycasts into the scene using [`AvianBackendSettings`] and [`PointerLocation`]s, then outputs
 /// [`PointerHits`].
 pub fn update_hits(
-    picking_cameras: Query<(&Camera, Option<&XpbdPickable>, Option<&RenderLayers>)>,
+    picking_cameras: Query<(&Camera, Option<&AvianPickable>, Option<&RenderLayers>)>,
     ray_map: Res<RayMap>,
     pickables: Query<&Pickable>,
-    marked_targets: Query<&XpbdPickable>,
+    marked_targets: Query<&AvianPickable>,
     layers: Query<&RenderLayers>,
     backend_settings: Res<AvianBackendSettings>,
     spatial_query: Option<Res<SpatialQueryPipeline>>,

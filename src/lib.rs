@@ -8,7 +8,7 @@
 //! listeners, so you can attach `On<Click>` components to an entity, to run a one-shot bevy system.
 //!
 //! The plugin works with any input, including mouse, touch, pens, or virtual pointers controlled by
-//! gamepads. It includes (optional) backends for `rapier`, `bevy_xpbd`, `bevy_mod_raycast`,
+//! gamepads. It includes (optional) backends for `rapier`, `bevy_avian`, `bevy_mod_raycast`,
 //! `bevy_ui`, `bevy_sprite`, and `egui`, that can be mixed and matched out of the box, or you can
 //! write your own.
 //!
@@ -78,7 +78,7 @@
 //! The plugin attempts to handle all the hard parts for you, all you need to do is tell it when a
 //! pointer is hitting any entities. Multiple backends can be used at the same time! [Use this
 //! simple API to write your own backend](crate::backend) in about 100 lines of code. The plugin
-//! also includes half a dozen backends out of the box. These include `rapier`, `bevy_xpbd`,
+//! also includes half a dozen backends out of the box. These include `rapier`, `bevy_avian`,
 //! `bevy_mod_raycast`, `bevy_ui`, `bevy_egui`, and `bevy_sprite`.
 //!
 //! #### Input Agnostic

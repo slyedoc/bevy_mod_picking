@@ -354,7 +354,7 @@ impl Debug for DebugName {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Self::Name(name, entity) => write!(f, "{} ({:?})", name.as_str(), entity),
-            Self::Entity(entity) => write!(f, "{entity:?}"),
+            Self::Entity(entity) => write!(f, "{entity}"),
         }
     }
 }

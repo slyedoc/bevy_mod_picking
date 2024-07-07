@@ -99,6 +99,7 @@ backend_sprite = ["bevy_picking_sprite", "bevy_picking_highlight/sprite"]
 backend_bevy_ui = ["bevy_picking_ui", "bevy_ui", "bevy_color"]
 backend_egui = ["bevy_picking_egui", "bevy_egui"]
 backend_avian = ["bevy_picking_avian", "avian3d"]
+backend_shader = [] # not used yet?
 
 [[example]]
 name = "rapier"
